@@ -1,7 +1,4 @@
-package servlets;
-
-import models.TodoModel;
-import services.TodoService;
+package todo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +17,7 @@ public class ListTodoServlet extends HttpServlet {
 
 
         request.setAttribute("todos", todoService.getTodos());
-        request.getRequestDispatcher("/WEB-INF/views/todo.jsp")
+        request.getRequestDispatcher("/WEB-INF/views/list-todos.jsp")
                 .forward(request, response);
 
     }

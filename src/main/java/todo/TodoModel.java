@@ -1,4 +1,4 @@
-package models;
+package todo;
 
 import java.util.Objects;
 
@@ -6,10 +6,12 @@ public class TodoModel {
 
 
     private String name;
+    private String category;
 
-    public TodoModel(String name) {
+    public TodoModel(String name, String category) {
         super();
         this.name = name;
+        this.category = category;
     }
 
     public String getName() {
@@ -17,8 +19,17 @@ public class TodoModel {
     }
 
 
-    public void setName(String name) {
+    public void setName(String category) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override

@@ -1,7 +1,4 @@
-package servlets.todoServlets;
-
-import models.TodoModel;
-import services.TodoService;
+package todo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +14,7 @@ public class DeleteTodoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        todoService.deleteTodo(new TodoModel(request.getParameter("todo")));
+        todoService.deleteTodo(new TodoModel(request.getParameter("todo"), request.getParameter("category")));
 
         response.sendRedirect("/list/todo");
 

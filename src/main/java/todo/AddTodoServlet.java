@@ -1,7 +1,4 @@
-package servlets.todoServlets;
-
-import models.TodoModel;
-import services.TodoService;
+package todo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,15 +12,21 @@ public class AddTodoServlet extends HttpServlet {
     private TodoService todoService = new TodoService();
 
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.getRequestDispatcher("/WEB-INF/views/add-todos.jsp")
+                .forward(request, response);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String newTodo = request.getParameter("todo");
-        if(!newTodo.isEmpty()) {
-            todoService.addTodo(new TodoModel(newTodo));
-        }
-        else {
+        String category = request.getParameter("category");
+        if (!newTodo.isEmpty()) {
+            todoService.addTodo(new TodoModel(newTodo, category));
+        } else {
         }
 
-       response.sendRedirect("/list/todo");
+        response.sendRedirect("/list/todo");
     }
 }

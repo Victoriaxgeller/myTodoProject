@@ -1,0 +1,31 @@
+<body>
+<nav class="navbar navbar-default">
+
+    <ul class="nav navbar-nav">
+        <li><a class="navbar-brand" href="/">Brand</a></li>
+        <li><a class="navbar-brand" href="/">Home</a></li>
+        <li><a class="navbar-brand" href="/list/todo">Todos</a></li>
+        <li><a class="navbar-brand" href="https://www.facebook.com/victoria.geller.3">Facebook</a></li>
+    </ul>
+    <%
+        if (request.getSession().getAttribute("username") != null) {
+    %>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a class="navbar-brand" href="/logout"> Logout </a></li>
+    </ul>
+    <%
+    } else {
+    %>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a class="navbar-brand" href="/login">Login</a></li>
+    </ul>
+    <%
+        }
+    %>
+
+
+</nav>
+
+<div class="container">
+</div>
+</body>
