@@ -15,7 +15,7 @@ public class DataBaseConnection {
                 System.out.println("Connection to Store DB succesfull!");
 
             } catch (Exception ex) {
-                System.out.println("Connection failed!!!!!!1..." + ex.getStackTrace());
+                System.out.println("Connection failed..." + ex.getStackTrace());
             }
         }
         return connection;
