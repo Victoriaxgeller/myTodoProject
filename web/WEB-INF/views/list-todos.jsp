@@ -3,7 +3,8 @@
 
 <div class="container">
 
-    <font color="blue" size="12px"> Welcome ${username}! </font>
+    <font color="blue" size="12px"> Welcome ${username} </font>br>
+    ${justRegisteredText}!</font>
 
     <table class="table table-striped">
         <caption>Your Todo's are:</caption>
