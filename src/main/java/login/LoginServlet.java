@@ -1,8 +1,5 @@
 package login;
 
-import database.DataBaseConnection;
-import database.DataBaseMethods;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,18 +27,16 @@ public class LoginServlet extends HttpServlet {
         String name = request.getParameter("username");
         String password = request.getParameter("userpassword");
 
-        if (userValidationService.isUserValid(name, password)) {
-            request.getSession().setAttribute("username", name);
-            request.setAttribute("session", "true");
-            response.sendRedirect("/list/todo");
-
-
-        } else {
+        if (!userValidationService.isUserRegistered(name, password)) {
             request.setAttribute("session", "false");
             request.setAttribute("errorMessage", "Oops, your login or password is wrong..");
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(
                     request, response);
             PrintWriter writer = response.getWriter();
+        } else {
+            request.getSession().setAttribute("username", name);
+            request.setAttribute("session", "true");
+            response.sendRedirect("/list/todo");
         }
     }
 }

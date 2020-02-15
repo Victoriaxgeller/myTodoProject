@@ -36,19 +36,25 @@ public class RegistrationServlet extends HttpServlet {
 
             request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(
                     request, response);
-
-        } else {
-            try {
-                dataBase.addUser(name, password);
-                request.getSession().setAttribute("username", name);
-                request.setAttribute("session", "true");
-                response.sendRedirect("/list/todo");
-                request.setAttribute("justRegisteredText", "Congratulations! Now you can save yout todos!");
-            } catch (SQLException e) {
-                System.out.println("SHIT");
-                System.out.println(e.getErrorCode());
-                System.out.println(e.getStackTrace());
-                System.out.println("User not added");
+        }
+        else {
+            if (userValidationService.isNameAvailable(name)) {
+                try {
+                    dataBase.addUser(name, password);
+                    request.getSession().setAttribute("username", name);
+                    request.setAttribute("session", "true");
+                    response.sendRedirect("/list/todo");
+                    request.setAttribute("justRegisteredText", "Congratulations! Now you can save yout todos!");
+                } catch (SQLException e) {
+                    System.out.println("SHIT");
+                    System.out.println(e.getErrorCode());
+                    System.out.println(e.getStackTrace());
+                    System.out.println("User not added");
+                }
+            } else {
+                request.setAttribute("errorMessage", "Sorry, this name is already taken...");
+                request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(
+                        request, response);
             }
         }
     }
