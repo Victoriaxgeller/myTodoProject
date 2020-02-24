@@ -1,6 +1,6 @@
 package login;
 
-import database.DataBaseMethods;
+import database.LoginDataBaseMethods;
 import todo.TodoService;
 
 import javax.servlet.ServletException;
@@ -16,12 +16,11 @@ import java.sql.SQLException;
 public class RegistrationServlet extends HttpServlet {
     private UserValidationService userValidationService = new UserValidationService();
     private TodoService todoService = new TodoService();
-    private DataBaseMethods dataBase = new DataBaseMethods();
+    private LoginDataBaseMethods dataBase = new LoginDataBaseMethods();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        request.setAttribute("welcomeText", "Hello, please, enter your name and password to register new account...");
 
         request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(
                 request, response);
@@ -36,20 +35,16 @@ public class RegistrationServlet extends HttpServlet {
 
             request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(
                     request, response);
-        }
-        else {
+        } else {
             if (userValidationService.isNameAvailable(name)) {
                 try {
-                    dataBase.addUser(name, password);
+                    int user_id = dataBase.addUser(name, password);
                     request.getSession().setAttribute("username", name);
+                    request.getSession().setAttribute("user_id", user_id);
                     request.setAttribute("session", "true");
                     response.sendRedirect("/list/todo");
-                    request.setAttribute("justRegisteredText", "Congratulations! Now you can save yout todos!");
                 } catch (SQLException e) {
-                    System.out.println("SHIT");
-                    System.out.println(e.getErrorCode());
-                    System.out.println(e.getStackTrace());
-                    System.out.println("User not added");
+                    System.out.println("User not registered..");
                 }
             } else {
                 request.setAttribute("errorMessage", "Sorry, this name is already taken...");

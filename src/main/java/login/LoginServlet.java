@@ -1,5 +1,7 @@
 package login;
 
+import database.LoginDataBaseMethods;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,13 +12,14 @@ import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
+    LoginDataBaseMethods dataBaseMethods = new
+            LoginDataBaseMethods();
 
     private UserValidationService userValidationService = new UserValidationService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        request.setAttribute("welcomeText", "Hello, please, enter your data...");
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(
                 request, response);
     }
@@ -35,6 +38,7 @@ public class LoginServlet extends HttpServlet {
             PrintWriter writer = response.getWriter();
         } else {
             request.getSession().setAttribute("username", name);
+            request.getSession().setAttribute("user_id", dataBaseMethods.userExists(name, password));
             request.setAttribute("session", "true");
             response.sendRedirect("/list/todo");
         }

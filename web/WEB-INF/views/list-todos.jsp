@@ -4,7 +4,7 @@
 <div class="container">
 
     <font color="blue" size="12px"> Welcome ${username}</font></br>
-    <p> ${justRegisteredText}</p>
+    <p><font class="blue"> ${successRegistration}</font></p>
 
     <table class="table table-striped">
         <caption>Your Todo's are:</caption>

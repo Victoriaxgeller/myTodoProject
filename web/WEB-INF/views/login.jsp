@@ -9,7 +9,8 @@
 
 </style>
 <div class="chart-content">
-    <p><font color="#006400">${welcomeText}</font></p>
+    <p><font color=#228b22 size="10px">Please, log in</font></p>
+
     <form action="/login" method="post">
         Enter your name <input class="form" type="text" name="username"/><br/><br/>
         Enter your password <input class="form" type="password" name="userpassword"/> <br/><br/>

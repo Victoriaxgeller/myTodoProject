@@ -5,17 +5,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class DataBaseMethods extends DataBaseConnection {
+public class LoginDataBaseMethods extends DataBaseConnection {
 
-    public void addUser(String name, String password) throws SQLException {
+    public int addUser(String name, String password) throws SQLException {
         PreparedStatement pstm = createConnection().prepareStatement("insert into" +
                 " login (name, password) values (?,?)");
         pstm.setString(1, name);
         pstm.setString(2, password);
         pstm.execute();
+
+        return userExists(name, password);
     }
 
-    public int userExists(String name, String password) throws SQLException {
+    public int userExists(String name, String password)  {
         try {
             PreparedStatement preparedStatement = createConnection().prepareStatement("SELECT id FROM login " +
                     "WHERE name= ? AND password= ?");
@@ -28,7 +30,8 @@ public class DataBaseMethods extends DataBaseConnection {
             }
             return 0;
         } catch (SQLException e) {
-            throw e;
+            System.out.println("Something wrong..");
+            return 0;
         }
     }
 

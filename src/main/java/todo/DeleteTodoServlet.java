@@ -17,6 +17,5 @@ public class DeleteTodoServlet extends HttpServlet {
         todoService.deleteTodo(new TodoModel(request.getParameter("todo"), request.getParameter("category")));
 
         response.sendRedirect("/list/todo");
-
     }
 }

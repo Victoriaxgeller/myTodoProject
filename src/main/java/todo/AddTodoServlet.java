@@ -23,7 +23,7 @@ public class AddTodoServlet extends HttpServlet {
         String newTodo = request.getParameter("todo");
         String category = request.getParameter("category");
         if (!newTodo.isEmpty()) {
-            todoService.addTodo(new TodoModel(newTodo, category));
+            todoService.addTodosToDataBase((Integer) request.getSession().getAttribute("user_id"), newTodo, category);
         } else {
         }
 
