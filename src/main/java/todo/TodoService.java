@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TodoService {
     TodoDataBaseMethods todoDataBaseMethods = new TodoDataBaseMethods();
-    private static List<TodoModel> todos = new ArrayList<>();
+    private List<TodoModel> todos = new ArrayList<>();
 
 //    static {
 //        todos.add(new TodoModel("Learn Web application Development", "Study"));
@@ -27,11 +27,13 @@ public class TodoService {
 
     public List<TodoModel> getTodosFromDataBase(int userId) {
         todos = todoDataBaseMethods.getUserTodos(userId);
+        for (TodoModel i : todos) {
+            System.out.println(i);
+        }
         return todos;
     }
 
     public List<TodoModel> addTodosToDataBase(int userId, String title, String category) {
-
         todoDataBaseMethods.addUserTodos(userId, new TodoModel(title, category));
         return getTodosFromDataBase(userId);
     }

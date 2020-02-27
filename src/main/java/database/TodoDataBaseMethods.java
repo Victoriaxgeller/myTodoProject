@@ -20,18 +20,22 @@ public class TodoDataBaseMethods extends DataBaseConnection {
 
             preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
-
+            int rowSize = 0;
             if (resultSet.next()) {
-                resultSet.last();    // moves cursor to the last row
-                int size = resultSet.getRow();
-                for (int i = 0; i < size; i++) {
-
-                    TodoModel t1 = new TodoModel(
+                rowSize = resultSet.getRow();
+            }
+            while (resultSet.next()) {
+                for (int i = 0; i < rowSize; i++) {
+                    todoModels.add(0, new TodoModel(
                             resultSet.getString("todo_title"),
-                            resultSet.getString("category"));
-                    todoModels.add(0, t1);
+                            resultSet.getString("category")));
                 }
             }
+            resultSet.first();
+            todoModels.add(0, new TodoModel(
+                    resultSet.getString("todo_title"),
+                    resultSet.getString("category")));
+
             return todoModels;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,18 +46,15 @@ public class TodoDataBaseMethods extends DataBaseConnection {
     public void addUserTodos(int userId, TodoModel todoModel) {
         try {
             PreparedStatement preparedStatement = createConnection()
-                    .prepareStatement("INSERT INTO todo (todo_title, user_id, category) VALUES (?,?,?)");
+                    .prepareStatement("INSERT INTO todo (todo_title, user_id, category)" +
+                            " VALUES (?,?,?)");
             preparedStatement.setString(1, todoModel.getName());
             preparedStatement.setInt(2, userId);
             preparedStatement.setString(3, todoModel.getCategory());
-            ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println("--------");
-            System.out.println(resultSet);
-            System.out.println("--------");
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 }
 
