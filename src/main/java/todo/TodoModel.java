@@ -1,11 +1,9 @@
 package todo;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
 public class TodoModel {
-
 
     private String name;
     private String category;
@@ -13,9 +11,14 @@ public class TodoModel {
     private int user_id;
 
     public TodoModel(String name, String category) {
-//        super();
         this.name = name;
         this.category = category;
+    }
+
+    public TodoModel(String name, String category, int todoId) {
+        this.name = name;
+        this.category = category;
+        this.todo_id = todoId;
     }
 
     public String getName() {
@@ -28,6 +31,10 @@ public class TodoModel {
 
     public String getCategory() {
         return category;
+    }
+
+    public int getTodoId() {
+        return todo_id;
     }
 
     private int getUserId(HttpServletRequest request) {

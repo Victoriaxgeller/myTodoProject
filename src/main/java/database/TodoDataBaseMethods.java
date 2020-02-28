@@ -15,7 +15,7 @@ public class TodoDataBaseMethods extends DataBaseConnection {
         List<TodoModel> todoModels = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = createConnection()
-                    .prepareStatement("SELECT todo_title, category FROM todo " +
+                    .prepareStatement("SELECT todo_title, category, todo_id FROM todo " +
                             "WHERE user_id =?");
 
             preparedStatement.setInt(1, userId);
@@ -28,13 +28,17 @@ public class TodoDataBaseMethods extends DataBaseConnection {
                 for (int i = 0; i < rowSize; i++) {
                     todoModels.add(0, new TodoModel(
                             resultSet.getString("todo_title"),
-                            resultSet.getString("category")));
+                            resultSet.getString("category"),
+                            resultSet.getInt("todo_id")));
+                    System.out.println("AAAA "+ todoModels.get(i).getTodoId());
+                    System.out.println("BBBB "+ todoModels.get(i));
                 }
             }
             resultSet.first();
             todoModels.add(0, new TodoModel(
                     resultSet.getString("todo_title"),
-                    resultSet.getString("category")));
+                    resultSet.getString("category"),
+                    resultSet.getInt("todo_id")));
 
             return todoModels;
         } catch (SQLException e) {
@@ -55,6 +59,16 @@ public class TodoDataBaseMethods extends DataBaseConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void deleteTodos(int userId, TodoModel todo) throws SQLException {
+        PreparedStatement preparedStatement = createConnection()
+                .prepareStatement("DELETE FROM todo where todo_id = ? AND user_id=?");
+        System.out.println("________");
+        System.out.println("________ " + preparedStatement);
+        System.out.println("________");
+        preparedStatement.setInt(1, todo.getTodoId());
+        preparedStatement.setInt(2, userId);
     }
 }
 

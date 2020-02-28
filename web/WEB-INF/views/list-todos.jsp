@@ -21,8 +21,9 @@
             <tr>
                 <td>${todo.name}</td>
                 <td>${todo.category}</td>
+                <td>${todo.todo_id}</td>
                 <td> &nbsp;&nbsp; <a class="btn btn-danger"
-                                     href="/delete/todo?todo=${todo.name}&category=${todo.category}">Delete</a></td>
+                                     href="/delete/todo?todo=${todo.name}&category=${todo.category}&todo_id=${todo.todo_id}">Delete</a></td>
             </tr>
         </c:forEach>
         </tbody>

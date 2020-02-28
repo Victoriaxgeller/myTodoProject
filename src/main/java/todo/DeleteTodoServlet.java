@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/delete/todo")
 public class DeleteTodoServlet extends HttpServlet {
@@ -13,9 +14,14 @@ public class DeleteTodoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        todoService.deleteTodo(new TodoModel(request.getParameter("todo"), request.getParameter("category")));
-
+            throws IOException {
+        try {
+            todoService.deleteTodoFromDataBase(Integer.parseInt(request.getParameter("user_id")),
+                    new TodoModel(request.getParameter("todo"), request.getParameter("category"),
+                            Integer.parseInt(request.getParameter("todo_id"))));
+        } catch (SQLException e) {
+            System.out.println("fghjgfdsdfghjgfdsadfghj");
+        }
         response.sendRedirect("/list/todo");
     }
 }

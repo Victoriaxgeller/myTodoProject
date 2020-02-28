@@ -2,28 +2,13 @@ package todo;
 
 import database.TodoDataBaseMethods;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TodoService {
     TodoDataBaseMethods todoDataBaseMethods = new TodoDataBaseMethods();
-    private List<TodoModel> todos = new ArrayList<>();
-
-//    static {
-//        todos.add(new TodoModel("Learn Web application Development", "Study"));
-//        todos.add(new TodoModel("Download and setup Database", "Study"));
-//        todos.add(new TodoModel("Learn Spring MVC", "Study"));
-//    }
-
-//    static {
-//        todos.add(new TodoModel("Learn Web application Development", "Study"));
-//        todos.add(new TodoModel("Download and setup Database", "Study"));
-//        todos.add(new TodoModel("Learn Spring MVC", "Study"));
-//    }
-
-    public List<TodoModel> getTodos() {
-        return todos;
-    }
+    private static List<TodoModel> todos = new ArrayList<>();
 
     public List<TodoModel> getTodosFromDataBase(int userId) {
         todos = todoDataBaseMethods.getUserTodos(userId);
@@ -38,8 +23,9 @@ public class TodoService {
         return getTodosFromDataBase(userId);
     }
 
-    public void addTodo(TodoModel todo) {
-        todos.add(todo);
+    public List<TodoModel> deleteTodoFromDataBase(int userId, TodoModel todo) throws SQLException {
+        todoDataBaseMethods.deleteTodos(userId, todo);
+        return getTodosFromDataBase(userId);
     }
 
     public void deleteTodo(TodoModel todo) {
